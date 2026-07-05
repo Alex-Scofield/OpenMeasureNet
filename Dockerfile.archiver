@@ -1,0 +1,17 @@
+FROM debian:bookworm-slim AS builder
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential pkg-config \
+    libpaho-mqtt-dev libpaho-mqttpp-dev libpqxx-dev \
+    && rm -rf /var/lib/apt/lists/*
+COPY src/archiver/ /src
+RUN g++ -std=c++17 -O2 /src/main.cpp \
+    -lpaho-mqttpp3 -lpaho-mqtt3as \
+    $(pkg-config --cflags --libs libpqxx) \
+    -o /archiver
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpaho-mqttpp3-1 libpaho-mqtt1.3 libpqxx-6.4 ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /archiver /archiver
+ENTRYPOINT ["/archiver"]

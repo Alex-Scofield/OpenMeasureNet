@@ -25,6 +25,17 @@ services:
     volumes:
       - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
+  archiver:
+    build:
+      context: .
+      dockerfile: Dockerfile.archiver
+    depends_on:
+      - database
+      - mosquitto
+    env_file:
+      - .env
+    restart: unless-stopped
+
   toolbox:
     profiles:
       - cli

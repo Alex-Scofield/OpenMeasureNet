@@ -3,7 +3,7 @@ FROM eclipse-mosquitto:2
 ARG ARCHIVER_PASSWORD=admin_pass
 
 RUN mosquitto_passwd -c -b /mosquitto/data/passwd archiver "$ARCHIVER_PASSWORD" && \
-    printf "user archiver\ntopic readwrite #\npattern readwrite %%u\n" > /mosquitto/data/acl && \
+    printf "user archiver\ntopic readwrite #\npattern readwrite o/%%u\n" > /mosquitto/data/acl && \
     chown mosquitto:mosquitto /mosquitto/data/passwd /mosquitto/data/acl
 
 COPY config/mosquitto/mosquitto.conf /mosquitto/config/mosquitto.conf
