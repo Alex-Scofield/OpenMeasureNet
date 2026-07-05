@@ -1,3 +1,5 @@
+name: backend-mateo
+
 services:
 
   database:
@@ -8,7 +10,28 @@ services:
       - .env
     volumes:
       - ./db-data/:/var/lib/postgresql/data/
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/db/init.sql:/docker-entrypoint-initdb.d/01_init.sql
 
-volumes:
-  db_data:
+  mosquitto:
+    build:
+      context: .
+      dockerfile: Dockerfile.mosquitto
+      args:
+        ARCHIVER_PASSWORD: ${MQTT_ARCHIVER_PASSWORD:-admin_pass}
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  toolbox:
+    profiles:
+      - cli
+    build:
+      context: .
+      dockerfile: Dockerfile.toolbox
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/project
+    working_dir: /project

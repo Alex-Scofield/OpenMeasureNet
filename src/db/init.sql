@@ -15,7 +15,8 @@ CREATE TABLE versions (
 CREATE TABLE boitiers (
     id SERIAL PRIMARY KEY,
     user_id SERIAL REFERENCES users(id),
-    version_id SERIAL REFERENCES versions(id)
+    version_id SERIAL REFERENCES versions(id),
+    password VARCHAR(255)
 );
 
 CREATE TABLE quantities (
