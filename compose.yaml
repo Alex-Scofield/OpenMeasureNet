@@ -15,10 +15,9 @@ services:
   mosquitto:
     build:
       context: .
-      dockerfile: Dockerfile.mosquitto
+      dockerfile: docker/Dockerfile.mosquitto
       args:
         ARCHIVER_PASSWORD: ${MQTT_ARCHIVER_PASSWORD:-admin_pass}
-    container_name: mosquitto
     restart: unless-stopped
     ports:
       - "1883:1883"
@@ -28,7 +27,7 @@ services:
   archiver:
     build:
       context: .
-      dockerfile: Dockerfile.archiver
+      dockerfile: docker/Dockerfile.archiver
     depends_on:
       - database
       - mosquitto
@@ -41,7 +40,7 @@ services:
       - cli
     build:
       context: .
-      dockerfile: Dockerfile.toolbox
+      dockerfile: docker/Dockerfile.toolbox
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .:/project
