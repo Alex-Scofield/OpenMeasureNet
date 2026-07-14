@@ -6,27 +6,28 @@
 #include <cstring>
 #include <cstdlib>
 #include <arpa/inet.h>
+#include <endian.h>
 #include <mqtt/client.h>
 #include <pqxx/pqxx>
 
 struct Observation {
     uint8_t quantity_id;
     float value;
-    float timestamp;
+    double timestamp;
     float longitude;
     float latitude;
 
     static Observation from_bytes(const std::string& raw) {
-        if (raw.size() < 17)
+        if (raw.size() < 21)
             throw std::runtime_error(
-                "bad payload (" + std::to_string(raw.size()) + " bytes, need 17)");
+                "bad payload (" + std::to_string(raw.size()) + " bytes, need 21)");
 
         Observation obs{};
         obs.quantity_id = raw[0];
         obs.value       = net_to_float(raw, 1);
-        obs.timestamp   = net_to_float(raw, 5);
-        obs.longitude   = net_to_float(raw, 9);
-        obs.latitude    = net_to_float(raw, 13);
+        obs.timestamp   = net_to_double(raw, 5);
+        obs.longitude   = net_to_float(raw, 13);
+        obs.latitude    = net_to_float(raw, 17);
         return obs;
     }
 
@@ -37,6 +38,15 @@ private:
         network = ntohl(network);
         float host;
         std::memcpy(&host, &network, 4);
+        return host;
+    }
+
+    static double net_to_double(const std::string& raw, size_t offset) {
+        uint64_t network;
+        std::memcpy(&network, &raw[offset], 8);
+        network = be64toh(network);
+        double host;
+        std::memcpy(&host, &network, 8);
         return host;
     }
 };

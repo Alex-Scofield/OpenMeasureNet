@@ -13,7 +13,7 @@ echo "Creating users, versions, quantities..."
 docker compose exec -T database psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "
 INSERT INTO users (email, password_hash) VALUES ('alice@test.com', 'alice_hash'), ('bob@test.com', 'bob_hash');
 INSERT INTO versions (release_date) VALUES (CURRENT_TIMESTAMP);
-INSERT INTO quantities (unit) VALUES ('temperature');
+INSERT INTO quantities (name, unit) VALUES ('Temperature', '°C'), ('Humidity', '%');
 "
 
 echo ""

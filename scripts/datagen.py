@@ -18,16 +18,18 @@ topic = 'o/' + sys.argv[1]
 client_id = f'publish-{random.randint(0, 1000)}'
 username = sys.argv[1]
 password = sys.argv[2]
-max_sensor = int(sys.argv[3])
+quantity_ids = [int(q) for q in sys.argv[3:]]
+
+
+longitude = round(random.uniform(-180.0, 180.0), 6)
+latitude = round(random.uniform(-90.0, 90.0), 6)
 
 
 def make_observation():
-    quantity_id = random.randint(1, max_sensor)
+    quantity_id = random.choice(quantity_ids)
     value = round(random.uniform(-50.0, 50.0), 2)
     timestamp = time.time()
-    longitude = round(random.uniform(-180.0, 180.0), 6)
-    latitude = round(random.uniform(-90.0, 90.0), 6)
-    return struct.pack('!Bffff', quantity_id, value, timestamp, longitude, latitude)
+    return struct.pack('!Bfdff', quantity_id, value, timestamp, longitude, latitude)
 
 
 def connect_mqtt():
@@ -50,7 +52,7 @@ def connect_mqtt():
 def publish(client):
     msg_count = 1
     while True:
-        time.sleep(1)
+        time.sleep(0.5)
         payload = make_observation()
         result = client.publish(topic, payload)
         status = result.rc

@@ -16,11 +16,13 @@ CREATE TABLE boitiers (
     id SERIAL PRIMARY KEY,
     user_id SERIAL REFERENCES users(id),
     version_id SERIAL REFERENCES versions(id),
-    password VARCHAR(255)
+    password VARCHAR(255),
+    dashboard_uid VARCHAR(64) UNIQUE
 );
 
 CREATE TABLE quantities (
     id SERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
     unit VARCHAR(32) NOT NULL
 );
 
