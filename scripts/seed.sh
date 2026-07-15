@@ -17,15 +17,15 @@ INSERT INTO quantities (name, unit) VALUES ('Temperature', '°C'), ('Humidity', 
 "
 
 echo ""
-echo "=== Creating boitiers ==="
+echo "=== Creating nodes ==="
 
 echo ""
-echo "Boitier 1 (user_id=1, version_id=1):"
-./scripts/add_boitier.sh 1 1
+echo "Node 1 (user_id=1, version_id=1):"
+./scripts/add_node.sh 1 1
 
 echo ""
-echo "Boitier 2 (user_id=2, version_id=1):"
-./scripts/add_boitier.sh 2 1
+echo "Node 2 (user_id=2, version_id=1):"
+./scripts/add_node.sh 2 1
 
 echo ""
 echo "=== Seed complete ==="

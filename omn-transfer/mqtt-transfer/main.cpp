@@ -87,7 +87,7 @@ int main() {
 
                     auto slash = msg->get_topic().find('/');
                     if (slash == std::string::npos) continue;
-                    int boitier_id = std::stoi(
+                    int node_id = std::stoi(
                         msg->get_topic().substr(slash + 1));
 
                     Observation obs = Observation::from_bytes(
@@ -96,12 +96,12 @@ int main() {
                     pqxx::work txn(pg);
                     txn.exec_params(
                         "INSERT INTO observations "
-                        "(time, boitier_id, quantity, value, location) "
+                        "(time, node_id, quantity, value, location) "
                         "VALUES (to_timestamp($1), $2, $3, $4, "
                         "ST_SetSRID(ST_MakePoint($5, $6), 4326)) "
                         "ON CONFLICT ON CONSTRAINT observations_pkey "
                         "DO NOTHING",
-                        obs.timestamp, boitier_id, static_cast<int>(obs.quantity_id),
+                        obs.timestamp, node_id, static_cast<int>(obs.quantity_id),
                         obs.value, obs.longitude, obs.latitude);
                     txn.commit();
                 } catch (const std::exception& e) {

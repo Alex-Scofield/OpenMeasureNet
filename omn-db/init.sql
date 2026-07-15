@@ -12,7 +12,7 @@ CREATE TABLE versions (
     release_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE boitiers (
+CREATE TABLE nodes (
     id SERIAL PRIMARY KEY,
     user_id SERIAL REFERENCES users(id),
     version_id SERIAL REFERENCES versions(id),
@@ -28,9 +28,9 @@ CREATE TABLE quantities (
 
 CREATE TABLE observations (
     time TIMESTAMP NOT NULL,
-    boitier_id SERIAL REFERENCES boitiers(id),
+    node_id SERIAL REFERENCES nodes(id),
     quantity SERIAL REFERENCES quantities(id),
     value REAL NOT NULL,
     location GEOMETRY(POINT, 4326),
-    PRIMARY KEY (time, boitier_id, value)
+    PRIMARY KEY (time, node_id, value)
 );

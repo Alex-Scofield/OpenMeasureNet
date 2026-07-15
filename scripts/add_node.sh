@@ -19,10 +19,10 @@ set -a
 . .env
 set +a
 
-echo "Creating boitier (user_id=$USER_ID, version_id=$VERSION_ID)..." >&2
+echo "Creating node (user_id=$USER_ID, version_id=$VERSION_ID)..." >&2
 
 NEW_ID=$(docker compose exec -T database psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At -q \
-  -c "INSERT INTO boitiers (user_id, version_id, password) VALUES ($USER_ID, $VERSION_ID, '$PASSWORD') RETURNING id;" 2>&1)
+  -c "INSERT INTO nodes (user_id, version_id, password) VALUES ($USER_ID, $VERSION_ID, '$PASSWORD') RETURNING id;" 2>&1)
 
 if ! echo "$NEW_ID" | grep -q '^[0-9]\+$'; then
   echo "ERROR: $NEW_ID" >&2
@@ -36,8 +36,8 @@ echo "Creating Grafana dashboard..." >&2
 
 DASHBOARD_JSON=$(sed \
   -e "s/__DASHBOARD_UID__/${DASHBOARD_UID}/g" \
-  -e "s/__BOITIER_ID__/${NEW_ID}/g" \
-  scripts/boitier-template.json)
+  -e "s/__NODE_ID__/${NEW_ID}/g" \
+  scripts/node-template.json)
 
 RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
   -u "${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD}" \
@@ -54,9 +54,9 @@ if [ "$HTTP_CODE" != "200" ]; then
 fi
 
 docker compose exec -T database psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -At -q \
-  -c "UPDATE boitiers SET dashboard_uid = '${DASHBOARD_UID}' WHERE id = ${NEW_ID};" > /dev/null
+  -c "UPDATE nodes SET dashboard_uid = '${DASHBOARD_UID}' WHERE id = ${NEW_ID};" > /dev/null
 
 EMBED_URL="http://localhost:3111/d/${DASHBOARD_UID}?orgId=1&kiosk"
 
-echo "boitier $NEW_ID: $PASSWORD"
+echo "node $NEW_ID: $PASSWORD"
 echo "  Dashboard: $EMBED_URL"

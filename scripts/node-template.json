@@ -2,8 +2,8 @@
   "dashboard": {
     "id": null,
     "uid": "__DASHBOARD_UID__",
-    "title": "Boitier __BOITIER_ID__",
-    "tags": ["boitiers"],
+    "title": "Node __NODE_ID__",
+    "tags": ["nodes"],
     "schemaVersion": 39,
     "version": 1,
     "timezone": "browser",
@@ -17,7 +17,7 @@
             "type": "postgres",
             "uid": "postgres_main"
           },
-          "query": "SELECT DISTINCT q.id AS __value, q.name AS __text FROM quantities q JOIN observations o ON q.id = o.quantity WHERE o.boitier_id = __BOITIER_ID__ ORDER BY q.id",
+          "query": "SELECT DISTINCT q.id AS __value, q.name AS __text FROM quantities q JOIN observations o ON q.id = o.quantity WHERE o.node_id = __NODE_ID__ ORDER BY q.id",
           "refresh": 2,
           "sort": 1,
           "label": "Quantity",
@@ -45,7 +45,7 @@
         },
         "targets": [
           {
-            "rawSql": "SELECT time AS \"time\", value FROM observations WHERE boitier_id = __BOITIER_ID__ AND quantity = $quantity ORDER BY time",
+            "rawSql": "SELECT time AS \"time\", value FROM observations WHERE node_id = __NODE_ID__ AND quantity = $quantity ORDER BY time",
             "refId": "A",
             "format": "time_series",
             "datasource": {
@@ -91,7 +91,7 @@
         },
         "targets": [
           {
-            "rawSql": "SELECT value FROM observations WHERE boitier_id = __BOITIER_ID__ AND quantity = $quantity ORDER BY time DESC LIMIT 1",
+            "rawSql": "SELECT value FROM observations WHERE node_id = __NODE_ID__ AND quantity = $quantity ORDER BY time DESC LIMIT 1",
             "refId": "A",
             "format": "table",
             "datasource": {
@@ -129,5 +129,5 @@
     }
   },
   "overwrite": false,
-  "message": "Auto-created for boitier __BOITIER_ID__"
+  "message": "Auto-created for node __NODE_ID__"
 }
