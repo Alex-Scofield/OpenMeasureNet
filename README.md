@@ -1,6 +1,9 @@
 # OpenMeasureNet
 **OpenMeasureNet** is a free, open source system for building and monitoring networks of measurement devices. It aims to provide communities with the ability to share real-time measurement data among their members and, if desired, to the public, easily and securely. 
 
+> [!WARNING]
+> This project is still in **early development**. As such, there are no guarantees that the features described here have been implemented and are in a working state.
+
 **OpenMeasureNet** takes care of the boilerplate that connects the measurements taken by your systems to a database, and that database to your measurement devices' owners. That way, you can build your own network for your community by modifying a single configuration file. Of course, **OpenMeasureNet** is highly customizable, but you should be able to get your network up and running with very little work. In particular, you may, if you wish, replace any of the components mentioned below to alter the system's functionalities, as long as the essential interfaces use the correct formats.
 
 An **OpenMeasureNet** project is made out of the following components:
