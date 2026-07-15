@@ -10,19 +10,19 @@ services:
       - .env
     volumes:
       - ./db-data/:/var/lib/postgresql/data/
-      - ./src/db/init.sql:/docker-entrypoint-initdb.d/01_init.sql
+      - ./omn-db/init.sql:/docker-entrypoint-initdb.d/01_init.sql
 
   mosquitto:
     build:
       context: .
-      dockerfile: docker/Dockerfile.mosquitto
+      dockerfile: omn-transfer/mqtt-transfer/Dockerfile.mosquitto
       args:
         ARCHIVER_PASSWORD: ${MQTT_ARCHIVER_PASSWORD:-admin_pass}
     restart: unless-stopped
     ports:
       - "1883:1883"
     volumes:
-      - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./omn-transfer/mqtt-transfer/config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
   grafana:
     image: grafana/grafana:latest
@@ -47,14 +47,14 @@ services:
     ports:
       - 3111:3000
     volumes:
-      - ./grafana:/var/lib/grafana
-      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./omn-backend/grafana:/var/lib/grafana
+      - ./omn-backend/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./omn-backend/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
 
   archiver:
     build:
       context: .
-      dockerfile: docker/Dockerfile.archiver
+      dockerfile: omn-transfer/mqtt-transfer/Dockerfile.archiver
     depends_on:
       - database
       - mosquitto
@@ -67,7 +67,7 @@ services:
       - cli
     build:
       context: .
-      dockerfile: docker/Dockerfile.toolbox
+      dockerfile: scripts/Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .:/project
