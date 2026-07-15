@@ -1,4 +1,6 @@
 .env
-db-data
+output
 __pycache__
 grafana
+.venv
+.pytest_cache

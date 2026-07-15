@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./db-data/:/var/lib/postgresql/data/
+      - ./output/db-data/:/var/lib/postgresql/data/
       - ./omn-db/init.sql:/docker-entrypoint-initdb.d/01_init.sql
 
   mosquitto:
