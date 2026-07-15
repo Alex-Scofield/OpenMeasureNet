@@ -18,7 +18,7 @@ Given how varied projects may be, it is important that they be easily extendable
 ## OMN Network
 The following entity-relationship diagram presents the fundamental entities that are involved in an *OMN Network*. These can, of course, be extended, and more entities can be added, but any implementation should include at least the following.
 
-![docs/media/er-diagram.jpg](ER Diagram)
+![ER Diagram](docs/media/er-diagram.jpg)
 
 The *OMN Network* can be separated into three components:
 1. *OMN Transfer*: This is the component that takes care of *transferring* the data from the users to the database. This can be achieved via an *mqtt* broker, for realtime monitoring, or a *mass transfer* component, where large quantities of measurements are transferred all at once, which can be useful when some devices are not connected to the internet, or when users may wish to not share their data in real time for privacy concerns. Other transfer systems, such as ones using LoRa or even Bluetooth could also be implemented. This component can be reused, for instance, for transferring data locally.
@@ -27,12 +27,12 @@ The *OMN Network* can be separated into three components:
 
 The following sequence diagram shows the interactions that happen when a user first turns on a node for realtime transfer, which sends two messages, and then logs into the backend and fetches a dashboard to view its data.
 
-![docs/media/sequence-diagram.jpg](Sequence Diagram)
+![Sequence Diagram](docs/media/sequence-diagram.jpg)
 
 ## OMN Payload
 To transfer data from a node to the network, **OpenMeasureNet** follows the simple format below:
 
-![docs/media/protocol-diagram.jpg](Protocol Diagram)
+![Protocol Diagram](docs/media/protocol-diagram.jpg)
 This format was chosen for the following reasons:
 1. It is lightweight, and thus suitable for devices that have low network connectivity.
 2. Each individual message transferred is semantically complete (as it is a measured quantity, at a given place, at a given time), and does not contain personal data.
@@ -45,7 +45,7 @@ There is a standard list of *quantity* identifiers that we encourage users to re
 ## Architecture
 The following diagram illustrates the system's architecture. In white, the core features, in red the *OMN Local* plugin, in green the *OMN Forecast* plugin and in purple the *OMN Frontend* plugin. 
 
-![media/docs/component-diagram.jpg](Component Diagram)
+![Component Diagram](docs/media/component-diagram.jpg)
 ## How to use **OpenMeasureNet**
 1. Clone this repository
 2. Clone any desired plugins
