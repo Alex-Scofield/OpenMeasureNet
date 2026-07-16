@@ -1,6 +1,6 @@
 .env
 output
 __pycache__
-grafana
+output/grafana
 .venv
 .pytest_cache

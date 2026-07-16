@@ -49,7 +49,7 @@ services:
     ports:
       - 3111:3000
     volumes:
-      - ./omn-backend/grafana:/var/lib/grafana
+      - ./output/grafana:/var/lib/grafana
       - ./omn-backend/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./omn-backend/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
 
