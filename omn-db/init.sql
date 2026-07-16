@@ -32,5 +32,5 @@ CREATE TABLE observations (
     quantity SERIAL REFERENCES quantities(id),
     value REAL NOT NULL,
     location GEOMETRY(POINT, 4326),
-    PRIMARY KEY (time, node_id, value)
+    PRIMARY KEY (time, node_id, quantity)
 );

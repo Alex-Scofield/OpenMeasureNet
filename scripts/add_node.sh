@@ -37,7 +37,7 @@ echo "Creating Grafana dashboard..." >&2
 DASHBOARD_JSON=$(sed \
   -e "s/__DASHBOARD_UID__/${DASHBOARD_UID}/g" \
   -e "s/__NODE_ID__/${NEW_ID}/g" \
-  scripts/node-template.json)
+  omn-backend/grafana/node-template.json)
 
 RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
   -u "${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD}" \
