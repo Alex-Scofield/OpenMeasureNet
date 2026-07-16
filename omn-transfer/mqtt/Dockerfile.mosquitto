@@ -6,4 +6,4 @@ RUN mosquitto_passwd -c -b /mosquitto/data/passwd archiver "$ARCHIVER_PASSWORD" 
     printf "user archiver\ntopic readwrite #\npattern readwrite o/%%u\n" > /mosquitto/data/acl && \
     chown mosquitto:mosquitto /mosquitto/data/passwd /mosquitto/data/acl
 
-COPY omn-transfer/mqtt-transfer/config/mosquitto/mosquitto.conf /mosquitto/config/mosquitto.conf
+COPY omn-transfer/mqtt/config/mosquitto/mosquitto.conf /mosquitto/config/mosquitto.conf

@@ -15,14 +15,14 @@ services:
   mosquitto:
     build:
       context: .
-      dockerfile: omn-transfer/mqtt-transfer/Dockerfile.mosquitto
+      dockerfile: omn-transfer/mqtt/Dockerfile.mosquitto
       args:
         ARCHIVER_PASSWORD: ${MQTT_ARCHIVER_PASSWORD:-admin_pass}
     restart: unless-stopped
     ports:
       - "1883:1883"
     volumes:
-      - ./omn-transfer/mqtt-transfer/config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./omn-transfer/mqtt/config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
   grafana:
     image: grafana/grafana:latest
@@ -56,7 +56,7 @@ services:
   archiver:
     build:
       context: .
-      dockerfile: omn-transfer/mqtt-transfer/Dockerfile.archiver
+      dockerfile: omn-transfer/mqtt/Dockerfile.archiver
     depends_on:
       - database
       - mosquitto
