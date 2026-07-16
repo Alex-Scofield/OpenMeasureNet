@@ -4,3 +4,4 @@ __pycache__
 output/grafana
 .venv
 .pytest_cache
+node_modules
