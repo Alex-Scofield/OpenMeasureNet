@@ -64,6 +64,18 @@ services:
       - .env
     restart: unless-stopped
 
+  api:
+    build:
+      context: omn-backend/api
+      dockerfile: Dockerfile.api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - database
+    restart: unless-stopped
+
   toolbox:
     profiles:
       - cli
