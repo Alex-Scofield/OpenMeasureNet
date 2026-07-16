@@ -76,6 +76,18 @@ services:
       - database
     restart: unless-stopped
 
+  bulk:
+    build:
+      context: omn-transfer/bulk
+      dockerfile: Dockerfile.bulk
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    depends_on:
+      - database
+    restart: unless-stopped
+
   toolbox:
     profiles:
       - cli
