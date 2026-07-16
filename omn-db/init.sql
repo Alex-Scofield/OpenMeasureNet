@@ -7,6 +7,14 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE invite_codes (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(32) UNIQUE NOT NULL,
+    used BOOLEAN DEFAULT FALSE,
+    used_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE versions (
     id SERIAL PRIMARY KEY,
     release_date TIMESTAMP NOT NULL
