@@ -53,3 +53,46 @@ The following diagram illustrates the system's architecture. In white, the core 
 4. Fill in the *.env* file with the relevant configuration
 5. Configure encryption (for instance SSL / TLS)
 6. Deploy the base and any desired plugins via docker compose
+
+## Development
+
+### Prerequisites
+- Docker and Docker Compose
+- Python 3 (for scripts)
+
+### Quick start
+```bash
+git clone <repo-url> && cd OpenMeasureNet
+docker compose up -d
+```
+
+### Services
+| Service    | URL                        |
+|------------|----------------------------|
+| Frontend   | http://localhost:3000       |
+| API        | http://localhost:8080/api   |
+| Grafana    | http://localhost:3111       |
+| Database   | localhost:5432              |
+| MQTT       | localhost:1883              |
+| Bulk       | http://localhost:8081/upload|
+
+### Common tasks
+```bash
+# Create a node
+scripts/add_node.sh <user_id> <version_id>
+
+# Generate an invite code
+scripts/gen_code.sh
+
+# Generate test MQTT data
+scripts/datagen.py <node_id> <password> <quantity_ids...>
+
+# Generate + upload bulk test data
+scripts/bulkgen.py <node_id> <password> <quantity_ids...> -n 1000 --upload
+
+# View logs
+docker compose logs -f <service>
+
+# Restart a service
+docker compose restart <service>
+```
