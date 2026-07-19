@@ -37,7 +37,7 @@ This format was chosen for the following reasons:
 1. It is lightweight, and thus suitable for devices that have low network connectivity.
 2. Each individual message transferred is semantically complete (as it is a measured quantity, at a given place, at a given time), and does not contain personal data.
 3. It allows for authorization and authentication to take place in the application layer (thus preventing security vulnerabilities such as spoofing).
-NOTE: TIMESTAMP IS ACTUALLY FLOAT64.
+
 There is a standard list of *quantity* identifiers that we encourage users to respect and to consult when developing their own node software. This is because, that way, different measurement systems can operate in different networks seamlessly, thus reducing vendor lock-in and allowing maximum flexibility with respect to the devices that can work with each network. 
 
 *Quantity ids* (or *type*, above) are given by a 1 byte unsigned integer. Quantities from 0 to 127 are reserved for this list, and those from 128 to 255 are free to represent any other quantities, as defined by each network's developers. 
